@@ -1,0 +1,98 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "AI Code Assistant",
+      "description": "An intelligent code completion tool powered by machine learning, helping developers write better code faster.",
+      "longDescription": "This AI-powered code assistant helps developers by providing smart code completions, identifying potential bugs, and suggesting best practices. Built with state-of-the-art machine learning models.",
+      "image": "/projects/ai-code-assistant.png",
+      "tech": ["Python", "TensorFlow", "React", "Node.js", "Docker"],
+      "stars": 1240,
+      "forks": 285,
+      "author": {
+        "name": "Sarah Chen",
+        "avatar": "/avatars/sarah.jpg",
+        "github": "sarahchen"
+      },
+      "demoUrl": "https://demo.project.com",
+      "githubUrl": "https://github.com/username/project",
+      "featured": true,
+      "categories": ["AI/ML", "Developer Tools"],
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "title": "DevSpace",
+      "description": "A modern collaboration platform for remote development teams with real-time features.",
+      "longDescription": "DevSpace enables seamless collaboration for remote development teams with features like real-time code sharing, video calls, and project management tools.",
+      "image": "/projects/devspace.png",
+      "tech": ["Next.js", "Socket.io", "PostgreSQL", "WebRTC", "Redis"],
+      "stars": 856,
+      "forks": 124,
+      "author": {
+        "name": "Alex Rivera",
+        "avatar": "https://avatars.githubusercontent.com/u/2345678",
+        "github": "alexdev"
+      },
+      "demoUrl": "https://devspace.demo.com",
+      "githubUrl": "https://github.com/username/devspace",
+      "featured": true,
+      "categories": ["Collaboration", "Developer Tools"],
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "title": "Neural Vision",
+      "description": "Advanced computer vision platform for real-time object detection and image analysis.",
+      "tech": ["Python", "PyTorch", "OpenCV", "FastAPI", "React"],
+      "stars": 2340,
+      "forks": 412,
+      "author": {
+        "name": "Maya Patel",
+        "avatar": "/avatars/maya.jpg",
+        "github": "mayaai"
+      },
+      "demoUrl": "https://neuralvision.ai",
+      "githubUrl": "https://github.com/mayaai/neural-vision",
+      "featured": true,
+      "categories": ["AI/ML", "Computer Vision"],
+      "status": "active"
+    },
+    {
+      "id": 4,
+      "title": "CloudMaster",
+      "description": "Infrastructure as code platform with automated deployment and monitoring.",
+      "tech": ["Terraform", "AWS", "Go", "Prometheus", "Grafana"],
+      "stars": 645,
+      "forks": 89,
+      "author": {
+        "name": "Carlos Rodriguez",
+        "avatar": "/avatars/carlos.jpg",
+        "github": "carlosdevops"
+      },
+      "demoUrl": "https://cloudmaster.dev",
+      "githubUrl": "https://github.com/carlosdevops/cloudmaster",
+      "featured": false,
+      "categories": ["DevOps", "Cloud"],
+      "status": "beta"
+    },
+    {
+      "id": 5,
+      "title": "SwiftUI Animations",
+      "description": "A comprehensive library of beautiful animations for iOS applications.",
+      "tech": ["Swift", "SwiftUI", "iOS", "Core Animation"],
+      "stars": 1876,
+      "forks": 234,
+      "author": {
+        "name": "Julia Kim",
+        "avatar": "/avatars/julia.jpg",
+        "github": "juliakim"
+      },
+      "demoUrl": "https://swiftui-animations.dev",
+      "githubUrl": "https://github.com/juliakim/swiftui-animations",
+      "featured": true,
+      "categories": ["Mobile", "UI/UX"],
+      "status": "active"
+    }
+  ]
+} 
