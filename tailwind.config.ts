@@ -57,8 +57,8 @@ export default {
           }
         },
         'pulse-slow': {
-          '0%, 100%': { opacity: 1 },
-          '50%': { opacity: 0.5 }
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.5' }
         },
         'shimmer': {
           '0%': { backgroundPosition: '-1000px 0' },
