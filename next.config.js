@@ -1,20 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  swcMinify: true,
+  reactStrictMode: true,
   images: {
-    unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
-        pathname: '/**',
-      },
-    ],
+    domains: ['avatars.githubusercontent.com', 'github.com'],
   },
-  experimental: {
-    forceSwcTransforms: true
+  // Add this to ensure CSS is properly handled
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.css$/i,
+      use: ["style-loader", "css-loader", "postcss-loader"],
+    });
+    return config;
   },
-  poweredByHeader: false,
 };
 
 module.exports = nextConfig; 

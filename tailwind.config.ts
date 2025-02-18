@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-export default {
+const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -66,19 +66,20 @@ export default {
         },
       },
       animation: {
-        float: 'float 15s ease-in-out infinite',
-        'fade-in': 'fade-in 0.5s ease-out forwards',
-        'slide-up': 'slide-up 0.5s ease-out forwards',
-        grid: 'grid 20s linear infinite',
-        'float-code': 'float-code 15s ease-in-out infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'fade-in': 'fade-in 0.5s ease-out',
+        'slide-up': 'slide-up 0.5s ease-out',
+        'grid': 'grid 15s linear infinite',
+        'float-code': 'float-code 6s ease-in-out infinite',
         'scroll-down': 'scroll-down 2s ease-in-out infinite',
         'bounce-slow': 'bounce-slow 3s ease-in-out infinite',
         'card-hover': 'card-hover 3s ease-in-out infinite',
-        'gradient-x': 'gradient-x 15s ease infinite',
-        'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
-        'shimmer': 'shimmer 2s infinite linear',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'shimmer': 'shimmer 2s linear infinite',
       },
     },
   },
   plugins: [],
-} satisfies Config;
+};
+
+export default config;

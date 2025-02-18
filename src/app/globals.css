@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0D1117;
+  --foreground: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,7 +15,29 @@
 }
 
 body {
-  color: var(--foreground);
   background: var(--background);
+  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Add any custom styles here */
+@layer utilities {
+  .shimmer {
+    @apply bg-gradient-to-r from-transparent via-white/10 to-transparent bg-[length:200%_100%];
+  }
+}
+
+@layer components {
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
 }
