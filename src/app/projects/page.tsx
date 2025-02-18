@@ -25,6 +25,25 @@ const projects: Project[] = [
   // Add more projects...
 ];
 
+// Add this new component for animated stats
+const AnimatedStat = ({ value, label }: { value: number, label: string }) => (
+  <motion.div 
+    className="text-center"
+    whileHover={{ scale: 1.1 }}
+    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+  >
+    <motion.div 
+      className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+    >
+      {value}
+    </motion.div>
+    <div className="text-sm text-gray-400">{label}</div>
+  </motion.div>
+);
+
 export default function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const categories = ['All', 'Web', 'Mobile', 'AI/ML', 'Open Source'];
@@ -35,9 +54,35 @@ export default function ProjectsPage() {
 
   return (
     <div className="min-h-screen bg-[#0D1117]">
-      {/* Animated Background */}
-      <div className="fixed inset-0 bg-[linear-gradient(to_right,#0D1117,#161B22)] opacity-50" />
-      
+      {/* Enhanced Background */}
+      <div className="fixed inset-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#0D1117,#161B22)]" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-repeat opacity-5" />
+        {/* Animated particles */}
+        {[...Array(50)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-white/10 rounded-full"
+            animate={{
+              x: [0, Math.random() * 100 - 50],
+              y: [0, Math.random() * 100 - 50],
+              scale: [1, Math.random() + 0.5, 1],
+              opacity: [0.1, 0.5, 0.1],
+            }}
+            transition={{
+              duration: Math.random() * 5 + 5,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Content */}
       <div className="relative max-w-7xl mx-auto px-4 py-16">
         {/* Header */}
         <motion.div
@@ -72,83 +117,84 @@ export default function ProjectsPage() {
           ))}
         </div>
 
-        {/* Projects Grid */}
+        {/* Enhanced Projects Grid */}
         <motion.div 
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           <AnimatePresence>
-            {filteredProjects.map((project) => (
+            {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className="group relative"
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group gradient-border"
               >
-                {/* Card */}
-                <div className="relative overflow-hidden rounded-xl bg-[#161B22] border border-gray-800 hover:border-gray-700 transition-all duration-300">
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative overflow-hidden rounded-xl bg-[#161B22] p-6">
+                  {/* Animated gradient background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  {/* Content */}
-                  <div className="p-6">
+                  {/* Project Header */}
+                  <div className="relative z-10">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-xl font-semibold text-white">
-                        {project.title}
-                      </h3>
-                      <span className={`px-3 py-1 rounded-full text-xs ${
-                        project.status === 'active' ? 'bg-green-500/20 text-green-400' :
-                        project.status === 'beta' ? 'bg-yellow-500/20 text-yellow-400' :
-                        'bg-gray-500/20 text-gray-400'
-                      }`}>
+                      <motion.h3 
+                        className="text-xl font-bold"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <span className="bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+                          {project.title}
+                        </span>
+                      </motion.h3>
+                      <motion.span 
+                        className={`px-3 py-1 rounded-full text-xs ${
+                          project.status === 'active' ? 'bg-green-500/20 text-green-400' :
+                          project.status === 'beta' ? 'bg-yellow-500/20 text-yellow-400' :
+                          'bg-gray-500/20 text-gray-400'
+                        }`}
+                        whileHover={{ scale: 1.1 }}
+                      >
                         {project.status}
-                      </span>
+                      </motion.span>
                     </div>
-                    
-                    <p className="text-gray-400 mb-4">
-                      {project.description}
-                    </p>
 
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <p className="text-gray-400 mb-6">{project.description}</p>
+
+                    {/* Enhanced Tech Stack */}
+                    <div className="flex flex-wrap gap-2 mb-6">
                       {project.tech.map((tech) => (
-                        <span
+                        <motion.span
                           key={tech}
-                          className="px-3 py-1 rounded-full bg-gray-800/50 text-gray-400 text-sm"
+                          className="tech-pill"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
                         >
                           {tech}
-                        </span>
+                        </motion.span>
                       ))}
                     </div>
 
-                    {/* Stats & Author */}
-                    <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-800">
-                      <div className="flex items-center space-x-4">
-                        <img
-                          src={project.author.avatar}
-                          alt={project.author.name}
-                          className="w-8 h-8 rounded-full"
-                        />
-                        <span className="text-gray-400 text-sm">
-                          {project.author.name}
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-4 text-gray-400">
-                        <span className="flex items-center">
-                          <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 .25a.75.75 0 0 1 .673.418l3.058 6.197 6.839.994a.75.75 0 0 1 .415 1.279l-4.948 4.823 1.168 6.811a.75.75 0 0 1-1.088.791L12 18.347l-6.117 3.216a.75.75 0 0 1-1.088-.79l1.168-6.812-4.948-4.823a.75.75 0 0 1 .416-1.28l6.838-.993L11.328.668A.75.75 0 0 1 12 .25z" />
-                          </svg>
-                          {project.stars}
-                        </span>
-                        <span className="flex items-center">
-                          <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 21a1.75 1.75 0 1 1 0-3.5 1.75 1.75 0 0 1 0 3.5zm-3.25-1.75a3.25 3.25 0 1 0 6.5 0 3.25 3.25 0 0 0-6.5 0zm-3-12.75a1.75 1.75 0 1 1 0-3.5 1.75 1.75 0 0 1 0 3.5zM2.5 4.75a3.25 3.25 0 1 0 6.5 0 3.25 3.25 0 0 0-6.5 0zM18.25 6.5a1.75 1.75 0 1 1 0-3.5 1.75 1.75 0 0 1 0 3.5zM15 4.75a3.25 3.25 0 1 0 6.5 0 3.25 3.25 0 0 0-6.5 0z" />
-                          </svg>
-                          {project.forks}
-                        </span>
-                      </div>
+                    {/* Project Stats */}
+                    <div className="grid grid-cols-3 gap-4 py-4 border-t border-gray-800">
+                      <AnimatedStat value={project.stars} label="Stars" />
+                      <AnimatedStat value={project.forks} label="Forks" />
+                      <AnimatedStat value={project.tech.length} label="Technologies" />
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-4 mt-6">
+                      <motion.a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium text-center hover:from-blue-600 hover:to-purple-700 transition-all"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        View Project
+                      </motion.a>
                     </div>
                   </div>
                 </div>
