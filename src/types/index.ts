@@ -33,5 +33,5 @@ export interface Project {
   githubUrl: string;
   featured: boolean;
   categories: string[];
-  status: 'active' | 'beta' | 'archived';
+  status: string;
 } 
