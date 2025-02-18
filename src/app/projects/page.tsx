@@ -2,28 +2,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Project } from '@/types';
+import projectsData from '@/data/projects.json';
 
-// Mock data - replace with your actual data fetching
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "BuildHub",
-    description: "Open-source developer community platform",
-    tech: ["Next.js", "TypeScript", "Tailwind"],
-    stars: 128,
-    forks: 45,
-    author: {
-      name: "John Doe",
-      avatar: "https://github.com/github.png",
-      github: "johndoe"
-    },
-    githubUrl: "https://github.com/nextdrios/buildhub",
-    featured: true,
-    categories: ["Web", "Open Source"],
-    status: "active"
-  },
-  // Add more projects...
-];
+// Use the data from projects.json
+const projects: Project[] = projectsData.projects;
 
 // Add this new component for animated stats
 const AnimatedStat = ({ value, label }: { value: number, label: string }) => (
@@ -104,6 +86,18 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           ))}
         </div>
 
+        {/* Author Info */}
+        <div className="flex items-center space-x-3 mb-6">
+          <motion.img
+            src={project.author.avatar}
+            alt={project.author.name}
+            className="w-8 h-8 rounded-full border border-gray-800"
+            whileHover={{ scale: 1.1, rotate: 360 }}
+            transition={{ duration: 0.8 }}
+          />
+          <span className="text-gray-400 text-sm">{project.author.name}</span>
+        </div>
+
         {/* Enhanced Stats Section */}
         <div className="grid grid-cols-3 gap-4 py-4 border-t border-gray-800/50 backdrop-blur-sm">
           <AnimatedStat value={project.stars} label="Stars" />
@@ -111,20 +105,34 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           <AnimatedStat value={project.tech.length} label="Technologies" />
         </div>
 
-        {/* Action Button with enhanced animation */}
-        <motion.a
-          href={project.githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 w-full inline-block px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium text-center transform transition-all"
-          whileHover={{ 
-            scale: 1.05,
-            backgroundImage: 'linear-gradient(to right, #4158D0, #C850C0, #FFCC70)'
-          }}
-          whileTap={{ scale: 0.95 }}
-        >
-          View Project
-        </motion.a>
+        {/* Action Buttons */}
+        <div className="flex gap-4 mt-6">
+          <motion.a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium text-center transform transition-all"
+            whileHover={{ 
+              scale: 1.05,
+              backgroundImage: 'linear-gradient(to right, #4158D0, #C850C0, #FFCC70)'
+            }}
+            whileTap={{ scale: 0.95 }}
+          >
+            View Project
+          </motion.a>
+          {project.demoUrl && (
+            <motion.a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-lg border border-gray-700 text-gray-300 hover:text-white hover:border-gray-600 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Live Demo
+            </motion.a>
+          )}
+        </div>
       </div>
     </div>
   </motion.div>
@@ -132,7 +140,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 
 export default function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const categories = ['All', 'Web', 'Mobile', 'AI/ML', 'Open Source'];
+  const categories = ['All', ...new Set(projects.flatMap(p => p.categories))];
 
   const filteredProjects = selectedCategory === 'All' 
     ? projects 
@@ -142,7 +150,8 @@ export default function ProjectsPage() {
     <div className="min-h-screen bg-[#0D1117]">
       {/* Enhanced Background */}
       <div className="fixed inset-0">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#0D1117,#161B22)]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0D1117] via-[#161B22] to-[#0D1117] animate-gradientMove" 
+             style={{ backgroundSize: '200% 200%' }} />
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-repeat opacity-5" />
         {/* Animated particles */}
         {[...Array(50)].map((_, i) => (
@@ -203,7 +212,7 @@ export default function ProjectsPage() {
           ))}
         </div>
 
-        {/* Enhanced Projects Grid */}
+        {/* Projects Grid */}
         <motion.div 
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
