@@ -63,6 +63,78 @@ body {
       transform: translateY(-2px);
     }
   }
+
+  .card-3d {
+    @apply relative transition-all duration-300;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    &:hover {
+      transform: translateY(-5px) rotateX(2deg) rotateY(2deg);
+    }
+  }
+
+  .glass-effect {
+    @apply relative overflow-hidden;
+    backdrop-filter: blur(8px);
+    background: linear-gradient(
+      135deg, 
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+  }
+
+  .shine-effect {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shine 3s infinite;
+  }
+
+  .neon-border {
+    @apply relative rounded-xl;
+    &::before {
+      content: '';
+      @apply absolute -inset-[1px] rounded-xl opacity-0 transition-opacity duration-300;
+      background: linear-gradient(
+        45deg,
+        #ff3cac,
+        #784ba0,
+        #2b86c5,
+        #ff3cac
+      );
+      background-size: 200% 200%;
+      animation: gradientMove 3s linear infinite;
+      z-index: -1;
+    }
+    &:hover::before {
+      @apply opacity-100;
+    }
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300;
+    &:hover {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3),
+                  0 0 40px rgba(147, 51, 234, 0.2);
+    }
+  }
+
+  .animated-gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      90deg,
+      #ff3cac,
+      #784ba0,
+      #2b86c5,
+      #ff3cac
+    );
+    background-size: 200% 100%;
+    animation: gradientMove 4s linear infinite;
+  }
 }
 
 @keyframes shimmer {
@@ -93,4 +165,14 @@ body {
 @keyframes borderGlow {
   0%, 100% { border-color: rgba(59, 130, 246, 0.5); }
   50% { border-color: rgba(147, 51, 234, 0.5); }
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(0.5deg); }
+}
+
+@keyframes shine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
