@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+const GITHUB_URL = "https://github.com/nextdrios/buildhub";
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -36,10 +38,10 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             <Link 
-              href="/explore" 
+              href="/docs" 
               className="text-white/80 hover:text-white transition-colors"
             >
-              Explore
+              Docs
             </Link>
             <Link 
               href="/developers" 
@@ -56,7 +58,7 @@ export default function Navbar() {
 
             {/* GitHub Button */}
             <a
-              href="https://github.com/yourusername/buildhub"
+              href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-full text-sm transition-all group"
@@ -104,7 +106,7 @@ export default function Navbar() {
               </Link>
             ))}
             <a
-              href="https://github.com/yourusername/buildhub"
+              href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 px-4 py-2 text-white/80 hover:text-white"

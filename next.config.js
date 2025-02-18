@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   images: {
-    domains: ['avatars.githubusercontent.com'],
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -10,6 +11,10 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    forceSwcTransforms: true
+  },
+  poweredByHeader: false,
 };
 
 module.exports = nextConfig; 

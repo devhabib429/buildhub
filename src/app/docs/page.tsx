@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 
 export default function DocsPage() {
   const [activeTab, setActiveTab] = useState('getting-started');
@@ -77,10 +76,10 @@ export default function DocsPage() {
                       <div className="prose prose-invert max-w-none">
                         <ol className="list-decimal list-inside space-y-4 text-gray-300">
                           <li>Go to the project repository on GitHub</li>
-                          <li>Click the "Fork" button in the top right corner</li>
+                          <li>Click the &quot;Fork&quot; button in the top right corner</li>
                           <li>Clone your forked repository locally:
                             <pre className="mt-2 p-4 bg-black/30 rounded-xl overflow-x-auto">
-                              <code>git clone https://github.com/your-username/project-name.git</code>
+                              <code>git clone https://github.com/yourusername/project-name.git</code>
                             </pre>
                           </li>
                         </ol>

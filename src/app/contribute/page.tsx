@@ -23,7 +23,7 @@ export default function ContributePage() {
             <strong>Commit and Push</strong>
             <pre className="bg-gray-100 p-4 rounded-lg">
               git add .<br />
-              git commit -m "Add: Developer Profile - Your Name"<br />
+              git commit -m &quot;Add: Developer Profile - Your Name&quot;<br />
               git push origin main
             </pre>
           </li>
