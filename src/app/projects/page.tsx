@@ -178,7 +178,7 @@ export default function ProjectsPage() {
       </div>
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-4 py-16">
+      <div className="relative max-w-7xl mx-auto px-4 pt-24 pb-16">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

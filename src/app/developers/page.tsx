@@ -187,7 +187,7 @@ export default function DevelopersPage() {
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-repeat opacity-5" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 py-16">
+      <div className="relative max-w-7xl mx-auto px-4 pt-24 pb-16">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -195,7 +195,7 @@ export default function DevelopersPage() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
-            Our Developer Community
+            Our Developers
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Connect with talented developers from around the world.
