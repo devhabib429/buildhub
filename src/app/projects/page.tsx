@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Project } from '@/types';
 import projectsData from '@/data/projects.json';
 
-// Use the data from projects.json
+// Use the data from projects.jsonn
 const projects: Project[] = projectsData.projects;
 
 // Add this new component for animated stats
