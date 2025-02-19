@@ -4,93 +4,68 @@ import { motion } from 'framer-motion';
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-[#0D1117] border-t border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* Grid Background */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_100%_50%_at_50%_100%,#000_70%,transparent_100%)]" />
+    <footer className="relative bg-[#0D1117] border-t border-gray-800/30">
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* Gradient line */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
         
-        <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo Section */}
-          <div className="md:col-span-2">
-            <Link href="/" className="flex items-center space-x-2 group mb-6">
-              <div className="relative w-8 h-8">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg transform group-hover:scale-110 transition-all duration-300" />
-                <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg">
-                  B
-                </div>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2 group">
+            <motion.div 
+              className="relative w-8 h-8"
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg" />
+              <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg">
+                B
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
-                BuildHub
-              </span>
-            </Link>
-            <p className="text-gray-400 mb-6 max-w-md">
-              Join our community of developers. Build, share, and grow together in the open-source ecosystem.
-            </p>
-            <div className="flex space-x-4">
-              {['twitter', 'github', 'discord'].map((social) => (
-                <motion.a
-                  key={social}
-                  href="#"
-                  className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span className="sr-only">{social}</span>
-                  {/* Add social icons here */}
-                </motion.a>
-              ))}
-            </div>
-          </div>
+            </motion.div>
+          </Link>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              {['Docs', 'Projects', 'Developers', 'Contribute'].map((item) => (
-                <motion.li key={item} whileHover={{ x: 5 }}>
-                  <Link href={`/${item.toLowerCase()}`} className="text-gray-400 hover:text-white transition-colors">
-                    {item}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Stay Updated</h3>
-            <div className="relative">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 rounded-lg bg-white/5 border border-gray-800 text-gray-300 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
-              />
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="mt-3 w-full px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium hover:from-blue-600 hover:to-purple-700 transition-all"
+          {/* Links */}
+          <div className="flex items-center space-x-6">
+            {[
+              { name: 'Docs', href: '/docs' },
+              { name: 'Projects', href: '/projects' },
+              { name: 'Developers', href: '/developers' },
+              { name: 'Contribute', href: '/contribute' }
+            ].map((link) => (
+              <motion.div
+                key={link.name}
+                whileHover={{ y: -2 }}
               >
-                Subscribe
-              </motion.button>
-            </div>
+                <Link 
+                  href={link.href}
+                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                >
+                  {link.name}
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Social Links */}
+          <div className="flex items-center space-x-4">
+            <motion.a
+              href="https://github.com/nextdrios/buildhub"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </motion.a>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
-              © 2024 BuildHub. All rights reserved.
-            </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">
-                Terms of Service
-              </Link>
-            </div>
-          </div>
+        {/* Copyright */}
+        <div className="mt-6 text-center text-gray-500 text-sm">
+          © {new Date().getFullYear()} BuildHub. All rights reserved.
         </div>
       </div>
     </footer>
