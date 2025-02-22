@@ -3,9 +3,16 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Developer } from '@/types';
 import developersData from '@/data/developers.json';
+import Fuse from 'fuse.js';
 
 // Use the data from developers.json
 const developers: Developer[] = developersData.developers;
+
+// Configure Fuse.js for search
+const fuse = new Fuse(developers, {
+  keys: ['name', 'role', 'location', 'skills', 'bio'],
+  threshold: 0.4,
+});
 
 const AnimatedSkill = ({ skill }: { skill: string }) => (
   <motion.span
@@ -166,17 +173,11 @@ const DeveloperCard = ({ developer, index }: { developer: Developer; index: numb
 );
 
 export default function DevelopersPage() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSkill, setSelectedSkill] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const allSkills = ['All', ...new Set(developers.flatMap(dev => dev.skills))];
-
-  const filteredDevelopers = developers.filter(dev => {
-    const matchesSearch = dev.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         dev.bio.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesSkill = selectedSkill === 'All' || dev.skills.includes(selectedSkill);
-    return matchesSearch && matchesSkill;
-  });
+  const filteredDevelopers = searchQuery 
+    ? fuse.search(searchQuery).map(result => result.item)
+    : developers;
 
   return (
     <div className="min-h-screen bg-[#0D1117]">
@@ -202,58 +203,54 @@ export default function DevelopersPage() {
           </p>
         </motion.div>
 
-        {/* Search and Filter */}
-        <div className="mb-12 space-y-6">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="max-w-2xl mx-auto"
-          >
-            <input
+        {/* Search Bar */}
+        <div className="max-w-2xl mx-auto mb-12">
+          <div className="relative">
+            <motion.input
               type="text"
-              placeholder="Search developers..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-6 py-3 rounded-xl bg-[#161B22] border border-gray-800 text-gray-300 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors"
+              placeholder="Search by name, role, skills, or location..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-6 py-4 bg-[#161B22]/80 border border-gray-800/50 rounded-xl text-gray-300 placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-all duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
             />
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-4"
-          >
-            {allSkills.map((skill) => (
-              <motion.button
-                key={skill}
-                onClick={() => setSelectedSkill(skill)}
-                className={`px-6 py-2 rounded-full border ${
-                  selectedSkill === skill
-                    ? 'border-purple-500 text-purple-500'
-                    : 'border-gray-700 text-gray-400 hover:border-gray-500'
-                } transition-all duration-300`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {skill}
-              </motion.button>
-            ))}
-          </motion.div>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+          </div>
         </div>
 
-        {/* Enhanced Developers Grid */}
+        {/* Developers Grid */}
         <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          <AnimatePresence>
+          <AnimatePresence mode="popLayout">
             {filteredDevelopers.map((developer, index) => (
               <DeveloperCard key={developer.id} developer={developer} index={index} />
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* No Results Message */}
+        {filteredDevelopers.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center text-gray-400 mt-12"
+          >
+            <p className="text-xl">No developers found matching your search.</p>
+            <button
+              onClick={() => setSearchQuery('')}
+              className="mt-4 text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              Clear search
+            </button>
+          </motion.div>
+        )}
       </div>
     </div>
   );
