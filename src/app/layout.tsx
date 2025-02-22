@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "BuildHub - Developer Community",
+  title: "DevSphere - Developer Community",
   description: "A platform for developers to showcase their work and connect with others",
 };
 

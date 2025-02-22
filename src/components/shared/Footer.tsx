@@ -11,17 +11,10 @@ export default function Footer() {
         
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 group">
-            <motion.div 
-              className="relative w-8 h-8"
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg" />
-              <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg">
-                B
-              </div>
-            </motion.div>
+          <Link href="/" className="group">
+            <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text group-hover:to-blue-400 transition-all duration-300">
+              DevSphere
+            </span>
           </Link>
 
           {/* Links */}
@@ -49,7 +42,7 @@ export default function Footer() {
           {/* Social Links */}
           <div className="flex items-center space-x-4">
             <motion.a
-              href="https://github.com/nextdrios/buildhub"
+              href="https://github.com/nextdrios/devsphere"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white transition-colors"
@@ -65,7 +58,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="mt-6 text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} BuildHub. All rights reserved.
+          © {new Date().getFullYear()} DevSphere. All rights reserved.
         </div>
       </div>
     </footer>

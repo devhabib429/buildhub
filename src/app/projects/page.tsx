@@ -3,9 +3,16 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Project } from '@/types';
 import projectsData from '@/data/projects.json';
+import Fuse from 'fuse.js';
 
 // Use the data from projects.jsonn
 const projects: Project[] = projectsData.projects;
+
+// Configure Fuse.js for search
+const fuse = new Fuse(projects, {
+  keys: ['title', 'description', 'tech', 'categories', 'author.name'],
+  threshold: 0.4,
+});
 
 // Add this new component for animated stats
 const AnimatedStat = ({ value, label }: { value: number, label: string }) => (
@@ -139,12 +146,11 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 );
 
 export default function ProjectsPage() {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const categories = ['All', ...new Set(projects.flatMap(p => p.categories))];
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredProjects = selectedCategory === 'All' 
-    ? projects 
-    : projects.filter(p => p.categories.includes(selectedCategory));
+  const filteredProjects = searchQuery 
+    ? fuse.search(searchQuery).map(result => result.item)
+    : projects;
 
   return (
     <div className="min-h-screen bg-[#0D1117]">
@@ -189,40 +195,58 @@ export default function ProjectsPage() {
             Featured Projects
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Discover amazing open-source projects built by our community members.
+            Discover innovative projects from our community of developers.
           </p>
         </motion.div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((category) => (
-            <motion.button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-2 rounded-full border ${
-                selectedCategory === category
-                  ? 'border-purple-500 text-purple-500'
-                  : 'border-gray-700 text-gray-400 hover:border-gray-500'
-              } transition-all duration-300`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {category}
-            </motion.button>
-          ))}
+        {/* Search Bar */}
+        <div className="max-w-2xl mx-auto mb-12">
+          <div className="relative">
+            <motion.input
+              type="text"
+              placeholder="Search projects by name, tech stack, or category..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-6 py-4 bg-[#161B22]/80 border border-gray-800/50 rounded-xl text-gray-300 placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-all duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         {/* Projects Grid */}
         <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          <AnimatePresence>
+          <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* No Results Message */}
+        {filteredProjects.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center text-gray-400 mt-12"
+          >
+            <p className="text-xl">No projects found matching your search.</p>
+            <button
+              onClick={() => setSearchQuery('')}
+              className="mt-4 text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              Clear search
+            </button>
+          </motion.div>
+        )}
       </div>
     </div>
   );
